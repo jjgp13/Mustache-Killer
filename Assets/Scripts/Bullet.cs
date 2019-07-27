@@ -7,20 +7,29 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
 
-    [SerializeField]
-    private float bulletSpeed;
+    public float bulletSpeed;
+    public float timeToDestroy;
     private Rigidbody rb;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        
+        DestroyObject(timeToDestroy);
     }
 
     private void FixedUpdate()
     {
-        transform.Translate(Vector3.up * bulletSpeed * Time.deltaTime);
-        //rb.MovePosition(Vector3.up * bulletSpeed * Time.deltaTime);
+        transform.Translate(Vector3.forward * bulletSpeed * Time.deltaTime);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Destroy(gameObject);
+    }
+
+    void DestroyObject(float time)
+    {
+        Destroy(gameObject, time);
     }
 }
